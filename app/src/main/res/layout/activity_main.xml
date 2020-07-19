@@ -9,8 +9,8 @@
 
     <ImageButton
         android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
         app:srcCompat="@android:drawable/ic_search_category_default"
         tools:layout_editor_absoluteX="18dp"
         tools:layout_editor_absoluteY="18dp" />

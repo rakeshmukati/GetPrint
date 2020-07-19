@@ -8,7 +8,6 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -17,13 +16,11 @@ import com.google.zxing.integration.android.IntentResult;
 public class MainActivity extends AppCompatActivity {
 
     ImageButton btn;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         btn=findViewById(R.id.imageButton);
-
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,12 +50,21 @@ public class MainActivity extends AppCompatActivity {
 
     void ConnectToWifi(String result){
         String  conf[]=result.split(";");
-        String ssid=conf[2];
-        ssid=ssid.replaceFirst("S:","");
-        String key=conf[1];
-        key=key.replaceFirst("P:","");
-        //tv.setText("ssid:"+ssid+"\npassword:"+key);
-        WifiConfiguration wifiConfig = new WifiConfiguration();
+        String key=new String("");
+        String ssid=new String("");
+
+        for(int i=0;i<conf.length;i++){
+            if(conf[i].contains("P:")){
+                 key=conf[i];
+                key=key.replaceFirst("P:","");
+            }
+            else if(conf[i].contains("S:")){
+                 ssid=conf[i];
+                ssid=ssid.replaceFirst("S:","");
+            }
+        }
+
+                WifiConfiguration wifiConfig = new WifiConfiguration();
         wifiConfig.SSID = String.format("\"%s\"", ssid);
         wifiConfig.preSharedKey = String.format("\"%s\"", key);
 
@@ -73,3 +79,4 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this,"Connected",Toast.LENGTH_LONG).show();
     }
 }
+
